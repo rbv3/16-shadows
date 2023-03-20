@@ -19,7 +19,8 @@ const scene = new THREE.Scene()
  */
 // Ambient light
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.5)
-gui.add(ambientLight, 'intensity').min(0).max(1).step(0.001).name('ambient')
+const ambientLightGui = gui.addFolder('ambient')
+ambientLightGui.add(ambientLight, 'intensity').min(0).max(1).step(0.001)
 scene.add(ambientLight)
 
 // Directional light
@@ -35,16 +36,20 @@ directionalLight.shadow.camera.left = -3
 directionalLight.shadow.camera.right = 3
 directionalLight.shadow.camera.top = 3
 directionalLight.shadow.camera.bottom = -3
-directionalLight.shadow.radius = 7 //radius doesnt work with pcfSoftShadowMap
+//radius doesnt work with pcfSoftShadowMap
+//play with resolution (width n height) to blue it
+directionalLight.shadow.radius = 7
 
 const directionalLightCameraHelper = new THREE.CameraHelper(directionalLight.shadow.camera)
 directionalLightCameraHelper.visible = false
 scene.add(directionalLightCameraHelper)
 
-gui.add(directionalLight, 'intensity').min(0).max(1).step(0.001).name('directional')
-gui.add(directionalLight.position, 'x').min(- 5).max(5).step(0.001)
-gui.add(directionalLight.position, 'y').min(- 5).max(5).step(0.001)
-gui.add(directionalLight.position, 'z').min(- 5).max(5).step(0.001)
+const dirLightGui = gui.addFolder('directional')
+dirLightGui.add(directionalLight, 'intensity').min(0).max(1).step(0.001)
+dirLightGui.add(directionalLight.position, 'x').min(- 5).max(5).step(0.001)
+dirLightGui.add(directionalLight.position, 'y').min(- 5).max(5).step(0.001)
+dirLightGui.add(directionalLight.position, 'z').min(- 5).max(5).step(0.001)
+dirLightGui.add(directionalLightCameraHelper, 'visible')
 scene.add(directionalLight)
 
 /**
@@ -52,8 +57,9 @@ scene.add(directionalLight)
  */
 const material = new THREE.MeshStandardMaterial()
 material.roughness = 0.7
-gui.add(material, 'metalness').min(0).max(1).step(0.001)
-gui.add(material, 'roughness').min(0).max(1).step(0.001)
+const materialGui = gui.addFolder('material')
+materialGui.add(material, 'metalness').min(0).max(1).step(0.001)
+materialGui.add(material, 'roughness').min(0).max(1).step(0.001)
 
 /**
  * Objects
